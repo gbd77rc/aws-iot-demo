@@ -1,0 +1,11 @@
+{
+    "sql": "SELECT * FROM 'telemetry'",
+    "ruleDisabled": false,
+    "awsIotSqlVersion": "2016-03-23",
+    "actions": [ {
+        "iotAnalytics": {
+            "channelName": "iot_demo_channel",
+            "roleArn": "arn:aws:iam::361738878560:role/service-role/iot_demo_role"
+        }
+    } ]
+}

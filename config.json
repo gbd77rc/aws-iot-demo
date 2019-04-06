@@ -1,0 +1,34 @@
+{
+    "aws": {
+        "telemetry_topic": "telemetry/rpi-1",
+        "control_topic": "control/rpi-1",
+        "client_id": "rpi-1",
+        "thing_id": "iot-demo-rpi-1",
+        "endpoint": "a1bqyju1450wf9-ats.iot.eu-west-1.amazonaws.com",
+        "port": 8883,
+        "root": "./certs/root-ca.pem",
+        "cert": "./certs/8098cdfe96-certificate.pem.crt",
+        "private": "./certs/8098cdfe96-private.pem.key"
+    },
+    "sensor": {
+        "temp_pin": 4,
+        "polling": 20.0
+    },
+    "leds": {
+        "blink": 500,
+        "colours": [{
+            "colour": "Green",
+            "pin": 26
+        }, {
+            "colour": "Yellow",
+            "pin": 19
+        }, {
+            "colour": "Red",
+            "pin": 13
+        }]
+    },
+    "logging": {
+        "level": "debug",
+        "location": "./logs/errors.log"
+    }
+}
