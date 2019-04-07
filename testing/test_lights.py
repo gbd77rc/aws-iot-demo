@@ -83,20 +83,20 @@ class Lights_Tests(unittest.TestCase):
         }
         lights.toogle(leds)
         time.sleep(1)
-        self.assertEqual(lights.get_dispatch_count(), 1)
+        self.assertEqual(lights.get_dispatch_count(), 2)
         leds = {
             "green": "on",
             "yellow": "blink"
         }
         lights.toogle(leds)
         time.sleep(1)
-        self.assertEqual(lights.get_dispatch_count(), 2)
+        self.assertEqual(lights.get_dispatch_count(), 3)
         leds = {
             "green": "off",
             "yellow": "off"
         }
         lights.toogle(leds)
-        self.assertEqual(lights.get_dispatch_count(), 3)
+        self.assertEqual(lights.get_dispatch_count(), 4)
         
     def test_singleton(self):
         a = Lights(self.config)
