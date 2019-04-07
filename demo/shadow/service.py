@@ -62,13 +62,22 @@ class Service:
 
     def update(self, event, message):
         logger.debug("Event [{}] was published with [{}] message".format(event,message))
-
+        led = None
         if event == "sensors":
             message = {
                 "temperature": message["temperature"],
                 "humidity": message["humidity"],
                 "cpu_temp": message["cpu_temp"]
             }
+            if message["cpu_temp"] > 40:
+                led = {
+                    "green": "on"
+                }
+                if message["cpu_temp"] > 65:
+                    led["yellow"] = 'on'
+                if message["cpu_temp"] > 80:
+                    led["red"] = 'on'
+                
         
         reported = {
             "state":{
@@ -77,6 +86,13 @@ class Service:
                 }
             }
         }
+        if event == "lights":
+            reported["state"]["desired"] = {
+                    event: message
+                } 
+
         j = json.dumps(reported)
         logger.debug("Publishing to Shadow [{}]".format(j))
         self.__shadow.shadowUpdate(j, self.__updated_callback, 30)
+        if led is not None:
+            self.__lights.toogle(led)
