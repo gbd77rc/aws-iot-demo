@@ -62,10 +62,17 @@ class Service:
 
     def update(self, event, message):
         logger.debug("Event [{}] was published with [{}] message".format(event,message))
+
+        if event == "sensors":
+            message = {
+                "temperature": message["temperature"],
+                "humidity": message["humidity"]
+            }
+        
         reported = {
             "state":{
                 "reported":{
-                    "lights": message
+                    event: message
                 }
             }
         }

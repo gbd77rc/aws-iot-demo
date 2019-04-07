@@ -20,7 +20,7 @@ class Sensor(Publisher):
         self.__event = Event()
         provider = AwsProvider(self.__config)
         self.__client = provider.get_client()
-        super().__init__(["sensor"])
+        super().__init__(["sensors"])
         logger.debug("Initialised Temperature Sensor on pin {} with polling of {} second(s)".format(self.__config["sensor"]["temp_pin"], self.__config["sensor"]["polling"]))
 
     def __reading(self):
@@ -30,7 +30,7 @@ class Sensor(Publisher):
             msg = json.dumps(body)
             logger.debug("Publishing Message: {}".format(msg))
             self.__client.publish(self.__config["aws"]["telemetry_topic"], msg, 1)
-            self.dispatch("sensor", msg)
+            self.dispatch("sensors", body)
             self.__event.wait(self.__config["sensor"]["polling"])
 
 
@@ -49,7 +49,7 @@ class Sensor(Publisher):
     def get_reading(self):
         result = self.__sensor.read()
         body = {}
-        body['temperature'] = result.temperature
+        body["temperature"] = result.temperature
         body["humidity"] = result.humidity
         body["device_id"] = self.__config["aws"]["client_id"]
         body["epoch"] = time.time()
@@ -58,7 +58,7 @@ class Sensor(Publisher):
         return body
 
     def register(self, who, callback=None):
-        super().register("sensor", who, callback)
+        super().register("sensors", who, callback)
 
     def unregister(self, who):
-        super().unregister("sensor", who)
+        super().unregister("sensors", who)

@@ -13,7 +13,7 @@ import getopt
 from demo.telemetry.sensor import Sensor
 from demo.config.reader import Reader
 from demo.control.lights import Lights
-
+from demo.shadow.service import Service
 
 def startup(argv):
     try:
@@ -50,14 +50,20 @@ def startup(argv):
     logger.info("Starting Demo")
     logger.info("Logging Level is set to {}".format(config["logging"]["level"]))
 
-    sensor = Sensor(config)
-    sensor.start()
+    shadow = Service(config)
     lights = Lights(config)
+    lights.register(shadow)
     lights.subscribe()
+    
+    sensor = Sensor(config)
+    sensor.register(shadow)
+    sensor.start()
+    shadow.start()
     logger.info("To Exit press <enter>")
     input()
     sensor.stop()
     lights.unsubscribe()
+    shadow.stop()
     logger.info("Completed the demo!")
 
 if __name__ == "__main__":
