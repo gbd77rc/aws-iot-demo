@@ -42,7 +42,7 @@ class Lights(Publisher, metaclass=Singleton):
             return False
         return True
 
-    def toogle(self, msg):
+    def toogle(self, msg, shadow = False):
         state = {}
         for key in msg:
             # Check if in leds
@@ -66,6 +66,8 @@ class Lights(Publisher, metaclass=Singleton):
                                 light.blink_on(self.__config["leds"]["blink"])
                             elif light.is_on() == False: 
                                 light.on()
+        if shadow:
+            state = self.get_state()
         if len(state.keys()) > 0:     
             self.dispatch("lights", state)           
                     
