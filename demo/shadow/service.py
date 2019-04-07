@@ -30,7 +30,7 @@ class Service:
             logger.debug("Delta state item is {}".format(key))
             # Check if led or not
             if key == 'lights':
-                self.__lights.toogle(current["state"][key], True) 
+                self.__lights.toogle(current["state"][key]) 
 
     def __updated_callback(self, payload, responseStatus, token):
         logger.debug("Updated Callback payload is {}".format(payload))
@@ -51,7 +51,7 @@ class Service:
             logger.debug("Desired state item is {}".format(key))
             # Check if led or not
             if key == 'lights':
-                self.__lights.toogle(current["state"]["desired"][key], True)    
+                self.__lights.toogle(current["state"]["desired"][key])    
 
     def start(self):
         self.__shadow.shadowRegisterDeltaCallback(self.__delta_callback)    

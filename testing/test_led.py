@@ -9,7 +9,7 @@ if platform.machine() == 'x86_64':
     sys.modules['RPi.GPIO'] = fake_rpi.RPi     # Fake RPi (GPIO)
     fake_rpi.toggle_print(False)
 
-logging.basicConfig(level=logging.ERROR,
+logging.basicConfig(level=logging.DEBUG,
                     format="%(asctime)s - %(name)s - %(levelname)s - [%(message)s]")
 from demo.devices.led import Led
 

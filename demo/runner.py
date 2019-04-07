@@ -17,7 +17,7 @@ from demo.shadow.service import Service
 
 def startup(argv):
     try:
-        opts, _ = getopt.getopt(argv, "hc:",["config="])
+        opts, _ = getopt.getopt(argv, "hc:s:",["config=","sensors="])
     except getopt.GetoptError:
         print("error: runner.py -c <config_file>")
         sys.exit(2)
@@ -27,12 +27,15 @@ def startup(argv):
         sys.exit(2)
 
     config_file = ""
+    publish_temp = True
     for opt, arg in opts:
         if opt == '-h':
             print("runner.py -c <config_file>")
             sys.exit()
         if opt in ('-c', '--config'):
             config_file = arg
+        if opt in ('-s', '--sensors'):
+            publish_temp = True if arg.lower() in ('on', 'yes') else False
 
     config_reader = Reader(config_file)
     config = config_reader.read()
@@ -49,6 +52,7 @@ def startup(argv):
 
     logger.info("Starting Demo")
     logger.info("Logging Level is set to {}".format(config["logging"]["level"]))
+    logger.info("Publishing Sensors is {}".format("ON" if publish_temp else "OFF"))
 
     shadow = Service(config)
     lights = Lights(config)
@@ -56,12 +60,15 @@ def startup(argv):
     lights.subscribe()
     
     sensor = Sensor(config)
-    sensor.register(shadow)
-    sensor.start()
+        
+    if publish_temp:
+        sensor.register(shadow)
+        sensor.start()
     shadow.start()
     logger.info("To Exit press <enter>")
     input()
-    sensor.stop()
+    if publish_temp:
+        sensor.stop()
     lights.unsubscribe()
     shadow.stop()
     logger.info("Completed the demo!")

@@ -42,7 +42,7 @@ class Lights(Publisher, metaclass=Singleton):
             return False
         return True
 
-    def toogle(self, msg, shadow = False):
+    def toogle(self, msg):
         state = {}
         for key in msg:
             # Check if in leds
@@ -54,7 +54,6 @@ class Lights(Publisher, metaclass=Singleton):
                     current = list(light.get_state().values())[0]
                     if self.__should_change_state(current, msg[key].lower()):
                         logger.debug('The current state [{}] is different to new state [{}]'.format(current, msg[key].lower()))
-                        state[key.lower()] = msg[key].lower()
                         led_off = msg[key].lower() == "off"
                         if led_off:
                             if light.is_blinking():
@@ -66,8 +65,7 @@ class Lights(Publisher, metaclass=Singleton):
                                 light.blink_on(self.__config["leds"]["blink"])
                             elif light.is_on() == False: 
                                 light.on()
-        if shadow:
-            state = self.get_state()
+        state = self.get_state()
         if len(state.keys()) > 0:     
             self.dispatch("lights", state)           
                     
