@@ -5,6 +5,7 @@ from threading import Thread, Event
 from demo.provider.aws import AwsProvider
 from demo.devices.dht11 import DHT11
 from demo.common.publisher import Publisher
+from demo.devices.linux_cpu_temp import CpuTemp
 
 logger = logging.getLogger(__name__)
 
@@ -13,11 +14,13 @@ class Sensor(Publisher):
     __config = {}
     __event = {}
     __thread ={}
+    __cpu = {}
 
     def __init__(self, config):
         self.__sensor = DHT11(config["sensor"]["temp_pin"])
         self.__config = config
         self.__event = Event()
+        self.__cpu = CpuTemp()
         provider = AwsProvider(self.__config)
         self.__client = provider.get_client()
         super().__init__(["sensors"])
@@ -50,6 +53,7 @@ class Sensor(Publisher):
         result = self.__sensor.read()
         body = {}
         body["temperature"] = result.temperature
+        body["cpu_temp"] = self.__cpu.read()
         body["humidity"] = result.humidity
         body["device_id"] = self.__config["aws"]["client_id"]
         body["epoch"] = time.time()

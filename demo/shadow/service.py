@@ -66,7 +66,8 @@ class Service:
         if event == "sensors":
             message = {
                 "temperature": message["temperature"],
-                "humidity": message["humidity"]
+                "humidity": message["humidity"],
+                "cpu_temp": message["cpu_temp"]
             }
         
         reported = {

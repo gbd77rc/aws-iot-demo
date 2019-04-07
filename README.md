@@ -63,7 +63,7 @@ The following json document is how the state should be.  This can be replicated 
         "sensors":{
             "temperature":0,
             "humidity":0,
-            "cpu_temp: 0
+            "cpu_temp": 0
         }
     }
 
