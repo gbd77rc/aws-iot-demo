@@ -52,7 +52,7 @@ class ShadowService_Tests(unittest.TestCase):
     def test_start_stop(self):
         service =  Service(self.config)
         service.start()
-        time.sleep(30)
+        time.sleep(5)
         service.stop()
 
         
