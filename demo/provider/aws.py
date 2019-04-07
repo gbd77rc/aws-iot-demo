@@ -2,30 +2,21 @@ import logging
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTShadowClient
 from AWSIoTPythonSDK.exception import AWSIoTExceptions
+from demo.common.singleton import Singleton
 
 logger = logging.getLogger(__name__)
 
-class Singleton(type):
-    def __init__(cls, name, bases, attrs, **kwargs):
-        super().__init__(name, bases, attrs)
-        cls._instance = None
-
-    def __call__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__call__(*args, **kwargs)
-        return cls._instance
-
 class AwsProvider(metaclass=Singleton):
     __config = {}
-    __client = {}
-    __shadow = {}
-    __shadowHandle= {}
+    __client = None
+    __shadow = None
+    __shadowHandle= None
     __instance = None
 
     def __init__(self, config):
         self.__config = config
         logger.debug("Initialising AWS Provider...")
-        self.__init_client()
+        self.__init_shadow()
     
     def __init_client(self):
         self.__client = AWSIoTMQTTClient(self.__config["aws"]["client_id"])
@@ -68,7 +59,12 @@ class AwsProvider(metaclass=Singleton):
         logger.debug("Initialised AWS Standard Client...")
 
     def get_client(self):
+        if self.__client is None:
+            self.__init_client()
         return self.__client
 
     def get_shadow_handle(self):
+        if self.__shadowHandle is None:
+            self.__init_shadow()
+            
         return self.__shadowHandle        

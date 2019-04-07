@@ -10,20 +10,12 @@ if platform.machine() == 'x86_64':
     sys.modules['RPi.GPIO'] = fake_rpi.RPi     # Fake RPi (GPIO)
     fake_rpi.toggle_print(False)
 
-logging.basicConfig(level=logging.ERROR,
+logging.basicConfig(level=logging.DEBUG,
                     format="%(asctime)s - %(name)s - %(levelname)s - [%(message)s]")
 
-from demo.telemetry.sensor import Sensor
+from demo.shadow.service import Service
 
-class Subscriber():
-    def __init__(self, test):
-        self.testing = test
-
-    def update(self, event, message):
-        self.testing.assertTrue(event, "sensor")
-        logging.debug("Dispatched event [{}] with message [{}]".format(event, message))
-
-class Sensor_Tests(unittest.TestCase):
+class ShadowService_Tests(unittest.TestCase):
     config = {}
     def setUp(self):
         self.config = {
@@ -41,27 +33,29 @@ class Sensor_Tests(unittest.TestCase):
             "sensor": {
                 "temp_pin": 4,
                 "polling": 5
+            },
+            "leds": {
+                "blink": 500,
+                "colours": [{
+                    "colour": "Green",
+                    "pin": 26
+                }, {
+                    "colour": "Yellow",
+                    "pin": 19
+                }, {
+                    "colour": "Red",
+                    "pin": 13
+                }]
             }
         }
 
     def test_start_stop(self):
-        sensor =  Sensor(self.config)
-        sensor.start()
-        time.sleep(2)
-        current = time.process_time()
-        sensor.stop()
-        elapsed = time.process_time()
-        logging.debug("Elapsed is {}".format((elapsed - current)))
-        self.assertTrue((elapsed - current) < 1.0)
-        
-    def test_publish(self):
-        sensor = Sensor(self.config)
-        sensor.register(Subscriber(self))
-        sensor.start()
-        time.sleep(2)
-        self.assertEqual(sensor.get_dispatch_count(), 1)
-        sensor.stop()
+        service =  Service(self.config)
+        service.start()
+        time.sleep(10)
+        service.stop()
 
+        
 
 if __name__ == '__main__':
     unittest.main()

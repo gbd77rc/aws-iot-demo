@@ -70,7 +70,7 @@ class Led:
 
     def get_state(self):
         state ={}
-        state[self.__name.lower()] = self.__state.name.lower()
+        state[self.__name.lower()] = 'blinking' if self.__blinking else self.__state.name.lower()
         return state
 
     def is_blinking(self):
