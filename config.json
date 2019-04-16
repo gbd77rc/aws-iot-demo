@@ -1,34 +1,71 @@
 {
-    "aws": {
-        "telemetry_topic": "telemetry/rpi-1",
-        "control_topic": "control/rpi-1",
+    "cloud": "aws",
+    "telemetry_topic": "telemetry/rpi-1",
+    "control_topic": "control/rpi-1",
+    "providers": [{
+        "type": "aws",
         "client_id": "rpi-1",
         "thing_id": "iot-demo-rpi-1",
         "endpoint": "a1bqyju1450wf9-ats.iot.eu-west-1.amazonaws.com",
         "port": 8883,
         "root": "./certs/root-ca.pem",
         "cert": "./certs/8098cdfe96-certificate.pem.crt",
-        "private": "./certs/8098cdfe96-private.pem.key"
-    },
-    "sensor": {
-        "temp_pin": 4,
-        "polling": 20.0
-    },
-    "leds": {
-        "blink": 500,
-        "colours": [{
-            "colour": "Green",
-            "pin": 26
-        }, {
-            "colour": "Yellow",
-            "pin": 19
-        }, {
-            "colour": "Red",
-            "pin": 13
-        }]
-    },
+        "private": "./certs/8098cdfe96-private.pem.key",
+        "mode": "STAND"
+    }],
+    "use-case": "Standard",
+    "use-cases": [{
+        "use-case": "Engineering",
+        "push": 10,
+        "payload_type": "JSON",
+        "devices": ["DHT-11", "CPU Temperature", "CPU Precentage", "Memory Available", "Serial Number", "Green", "Yellow", "Red"]
+    }, {
+        "use-case": "Standard",
+        "push": 30,
+        "payload_type": "PROTOBUF",
+        "devices": ["DHT-11", "CPU Temperature"]
+    }, {
+        "use-case": "Shadow",
+        "push": 30,
+        "payload_type": "JSON",
+        "devices": ["DHT-11", "CPU Temperature", "Green", "Yellow", "Red"]
+    }],
+    "devices": [{
+        "type": "led",
+        "name": "Green",
+        "pin": 26,
+        "direction": "OUT"
+    }, {
+        "type": "led",
+        "name": "Yellow",
+        "pin": 19,
+        "direction": "OUT"
+    }, {
+        "type": "led",
+        "name": "Red",
+        "pin": 13,
+        "direction": "OUT"
+    }, {
+        "type": "dht11",
+        "name": "DHT-11",
+        "pin": 4,
+        "direction": "IN"
+    }, {
+        "type": "cputemp",
+        "name": "CPU Temperature",
+        "location": "/sys/class/thermal/thermal_zone0/temp"
+    }, {
+        "type": "cpuprec",
+        "name": "CPU Precentage"
+    }, {
+        "type": "memavail",
+        "name": "Memory Available"
+    }, {
+        "type": "serialnum",
+        "name": "Serial Number"
+    }],
     "logging": {
-        "level": "debug",
-        "location": "./logs/errors.log"
+        "level": "DEBUG",
+        "error-file": "./logs/error.log"
     }
 }
