@@ -5,6 +5,7 @@ import platform
 from demo.devices.devicebase import DeviceBase
 from demo.devices.deviceresult import DeviceResult
 from demo.config.deviceconfig import DeviceConfig
+from demo.devices.devicetype import DeviceType
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,7 @@ class DHT11(DeviceBase):
     def __init__(self, config):
         logger.debug("Machine architecture is {}".format(platform.machine()))
         self.__max_counter = 10 if platform.machine() == 'x86_64' else 100
-        super().__init__(config)
+        super().__init__(config, DeviceType.DHT11)
 
     def read(self):
         start = time.time()

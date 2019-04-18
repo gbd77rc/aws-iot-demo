@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 from demo.config.deviceconfig import DeviceConfig
 from demo.devices.deviceresult import DeviceResult
 from demo.devices.devicebase import DeviceBase
-
+from demo.devices.devicetype import DeviceType
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -26,7 +26,7 @@ class Led(DeviceBase):
     __blinking = False
 
     def __init__(self, config):
-        super().__init__(config)
+        super().__init__(config, DeviceType.LED)
         GPIO.setup(super().Config.Pin, GPIO.OUT)
         logger.debug("Initialised LED ({}) on PIN {}".format(
             super().Config.Name, super().Config.Pin))
@@ -72,7 +72,9 @@ class Led(DeviceBase):
 
     def get_state(self):
         state ={}
-        state[super().Config.Name.lower()] = 'blinking' if self.__blinking else self.__state.name.lower()
+        #The name has a post fix of (LED) so lets get rid of that
+        name = super().Config.Name.replace(" (LED)", "").lower()
+        state[name] = 'blinking' if self.__blinking else self.__state.name.lower()
         return state
 
     def is_blinking(self):

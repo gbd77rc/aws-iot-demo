@@ -4,7 +4,7 @@ import time
 import sys
 import json
 
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.ERROR,
                     format="%(asctime)s - %(name)s - %(levelname)s - [%(message)s]")
 
 from demo.config.deviceconfig import DeviceConfig
@@ -41,3 +41,4 @@ class DeviceConfig_Tests(unittest.TestCase):
 
         self.assertEqual(a.Type, DeviceType.DHT11)
         self.assertEqual(a.Pin, 6)
+        self.assertEqual(a.Name, "Sensor (DHT-11)")

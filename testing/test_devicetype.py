@@ -17,7 +17,7 @@ class DeviceType_Tests(unittest.TestCase):
 
     def test_are_not_equal(self):
         a = DeviceType.DHT11
-        b = DeviceType.CPUPRECENT
+        b = DeviceType.CPUPERCENT
         self.assertNotEqual(a, b)
        
     def test_string_to_type(self):

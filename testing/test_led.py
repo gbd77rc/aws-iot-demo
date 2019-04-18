@@ -57,6 +57,12 @@ class LED_Tests(unittest.TestCase):
         self.green_led.write(0)
         self.assertFalse(self.green_led.is_on())
         
+    def test_dif_config_type(self):
+        config = DeviceConfig({
+            "type": "memory",
+            "name": "Memory"
+        })
 
+        self.assertRaises(ValueError, Led, config)
 if __name__ == '__main__':
     unittest.main()

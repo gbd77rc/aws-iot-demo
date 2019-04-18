@@ -2,6 +2,7 @@ import time
 from demo.config.deviceconfig import DeviceConfig
 from demo.devices.devicebase import DeviceBase
 from demo.devices.deviceresult import DeviceResult
+from demo.devices.devicetype import DeviceType
 
 import logging
 from pathlib import Path
@@ -10,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class CpuTemp(DeviceBase):
     def __init__(self, config):
-        super().__init__(config)
+        super().__init__(config, DeviceType.CPUTEMP)
 
     def read(self):
         temp = Path(super().Config.Location)

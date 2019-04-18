@@ -8,18 +8,16 @@ class DeviceType(Enum):
     LED = 2
     CPUTEMP = 3
     CPUPERCENT = 4
-    MEMAVAIL = 5
-    SERIALNUM = 6
+    MEMORY = 5
 
     def __init__(self, ignored):
         self.__friendly = [
             "None Defined",
-            "DHT-11 Sensor",
-            "LED Light",
+            "DHT-11",
+            "LED",
             "CPU Temperature",
             "CPU Percentage Used",
-            "Memory Available",
-            "Serial Number"
+            "Memory Information"
         ]
 
     @staticmethod
@@ -32,10 +30,8 @@ class DeviceType(Enum):
             return DeviceType.CPUTEMP
         if name.upper() == "CPUPERCENT":
             return DeviceType.CPUPERCENT
-        if name.upper() == "MEMAVAIL":
-            return DeviceType.MEMAVAIL
-        if name.upper() == "SERIALNUM":
-            return DeviceType.SERIALNUM
+        if name.upper() == "MEMORY":
+            return DeviceType.MEMORY
         return DeviceType.DEVNONE
 
     def get_friendly(self):

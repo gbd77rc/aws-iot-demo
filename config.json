@@ -44,21 +44,18 @@
         "pin": 13
     }, {
         "type": "dht11",
-        "name": "DHT-11",
+        "name": "Sensor",
         "pin": 4
     }, {
         "type": "cputemp",
-        "name": "CPU Temperature",
+        "name": "CPU Info",
         "location": "/sys/class/thermal/thermal_zone0/temp"
     }, {
         "type": "cpuprec",
-        "name": "CPU Precentage"
+        "name": "CPU Info"
     }, {
-        "type": "memavail",
-        "name": "Memory Available"
-    }, {
-        "type": "serialnum",
-        "name": "Serial Number"
+        "type": "memory",
+        "name": "Memory Info"
     }],
     "logging": {
         "level": "DEBUG",

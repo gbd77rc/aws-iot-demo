@@ -105,11 +105,11 @@ This device will read the CPU precentage using PSUtils
     }    
     
 ### Memory Available
-This device will read the memory available using PSUtils
+This device will read the memory information using PSUtils
 
     {
-        "type": "memavail",
-        "name": "Memory Available"
+        "type": "memory",
+        "name": "Memory Information"
     } 
 
 ## Logging

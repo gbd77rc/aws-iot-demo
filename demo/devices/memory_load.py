@@ -7,24 +7,22 @@ from demo.devices.devicebase import DeviceBase
 from demo.devices.deviceresult import DeviceResult
 from demo.devices.devicetype import DeviceType
 
-class CpuPercent(DeviceBase):
+class MemoryInfo(DeviceBase):
     def __init__(self, config):
-        super().__init__(config, DeviceType.CPUPERCENT)
+        super().__init__(config, DeviceType.MEMORY)
 
     def read(self):
         start = time.time()
         result = DeviceResult(super().Config.Name, 0.0, False)
         try:
-            cpu = psutil.cpu_percent()
-            cpu_individual = psutil.cpu_percent(percpu=True)
+            mem = psutil.virtual_memory()            
+            swap = psutil.swap_memory()
             end = time.time()
             result.Duration = (end - start)
-            result.add_reading("All CPU","float", cpu)
-            count = 1
-            for proc in cpu_individual:
-                result.add_reading("CPU {}".format(count), "float", proc)
-                count += 1
-
+            result.add_reading("Total","float",mem.total)
+            result.add_reading("Available","float",mem.available)
+            result.add_reading("Swap Total", "float",swap.total)
+            result.add_reading("SWap Available", "float",swap.free)
             result.IsValid = True
 
         except:

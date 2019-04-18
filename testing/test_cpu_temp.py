@@ -21,3 +21,11 @@ class CpuTemp_Tests(unittest.TestCase):
             self.assertTrue(a.IsValid)
         else:
             self.assertFalse(a.IsValid)
+    
+    def test_dif_config_type(self):
+        config = DeviceConfig({
+            "type": "memory",
+            "name": "Memory"
+        })
+
+        self.assertRaises(ValueError, CpuTemp, config)

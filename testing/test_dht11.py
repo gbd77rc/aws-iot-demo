@@ -30,5 +30,13 @@ class DHT11_Tests(unittest.TestCase):
         self.assertFalse(value.IsValid)
         logging.info("Reading is [{}]".format(value.to_json(pretty=True)))
 
+    def test_dif_config_type(self):
+        config = DeviceConfig({
+            "type": "memory",
+            "name": "Memory"
+        })
+
+        self.assertRaises(ValueError, DHT11, config)        
+
 if __name__ == '__main__':
     unittest.main()
