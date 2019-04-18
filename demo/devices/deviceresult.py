@@ -36,3 +36,14 @@ class DeviceResult:
     def IsValid(self):
         return self.__isvalid
  
+    @IsValid.setter
+    def IsValid(self, value):
+        self.__isvalid = value
+    
+    @property
+    def Duration(self):
+        return self.__duration
+
+    @Duration.setter
+    def Duration(self, value):
+        self.__duration = value

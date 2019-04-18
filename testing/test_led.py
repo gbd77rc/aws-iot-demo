@@ -9,14 +9,20 @@ if platform.machine() == 'x86_64':
     sys.modules['RPi.GPIO'] = fake_rpi.RPi     # Fake RPi (GPIO)
     fake_rpi.toggle_print(False)
 
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.ERROR,
                     format="%(asctime)s - %(name)s - %(levelname)s - [%(message)s]")
 from demo.devices.led import Led
+from demo.config.deviceconfig import DeviceConfig
 
 class LED_Tests(unittest.TestCase):
     green_led = {}
     def setUp(self):
-        self.green_led = Led("Green", 26)
+        self.config = DeviceConfig({
+            "name": "Green",
+            "type": "led",
+            "pin": 6
+        })
+        self.green_led = Led(self.config)
 
     def test_on(self):
         self.green_led.on()
@@ -44,6 +50,12 @@ class LED_Tests(unittest.TestCase):
         state = self.green_led.get_state()
         self.assertEqual(state["green"], "off")
         self.assertFalse(self.green_led.is_blinking())
+        
+    def test_write(self):
+        self.green_led.write(1)
+        self.assertTrue(self.green_led.is_on())
+        self.green_led.write(0)
+        self.assertFalse(self.green_led.is_on())
         
 
 if __name__ == '__main__':

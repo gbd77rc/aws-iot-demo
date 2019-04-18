@@ -74,7 +74,7 @@ This device is switch on/off the LED.  Here is an example of the LED device
     {
         "type": "led",
         "name": "Green",
-        "pind": 23
+        "pin": 23
     }
 
 
@@ -84,7 +84,7 @@ This device will read the temperature/humidity using the one-wire protocol.
     {
         "type": "dht11",
         "name": "DHT-11",
-        "pind": 16
+        "pin": 16
     }
 
 ### CPU Temp
