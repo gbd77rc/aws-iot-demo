@@ -26,3 +26,7 @@ class MemoryInfo_Tests(unittest.TestCase):
         })
 
         self.assertRaises(ValueError, MemoryInfo, config)
+
+
+if __name__ == '__main__':
+    unittest.main()        

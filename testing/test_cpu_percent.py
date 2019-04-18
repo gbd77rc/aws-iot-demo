@@ -26,3 +26,7 @@ class CpuPercent_Tests(unittest.TestCase):
         })
 
         self.assertRaises(ValueError, CpuPercent, config)
+
+
+if __name__ == '__main__':
+    unittest.main()        

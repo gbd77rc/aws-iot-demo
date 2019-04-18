@@ -29,3 +29,7 @@ class CpuTemp_Tests(unittest.TestCase):
         })
 
         self.assertRaises(ValueError, CpuTemp, config)
+
+
+if __name__ == '__main__':
+    unittest.main()        

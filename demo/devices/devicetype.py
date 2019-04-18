@@ -17,7 +17,7 @@ class DeviceType(Enum):
             "LED",
             "CPU Temperature",
             "CPU Percentage Used",
-            "Memory Information"
+            "Memory Information in Bytes"
         ]
 
     @staticmethod

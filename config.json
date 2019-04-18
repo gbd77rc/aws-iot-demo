@@ -48,14 +48,14 @@
         "pin": 4
     }, {
         "type": "cputemp",
-        "name": "CPU Info",
+        "name": "CPU",
         "location": "/sys/class/thermal/thermal_zone0/temp"
     }, {
         "type": "cpuprec",
-        "name": "CPU Info"
+        "name": "CPU"
     }, {
         "type": "memory",
-        "name": "Memory Info"
+        "name": "Memory"
     }],
     "logging": {
         "level": "DEBUG",

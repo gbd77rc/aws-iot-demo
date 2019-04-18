@@ -64,5 +64,6 @@ class LED_Tests(unittest.TestCase):
         })
 
         self.assertRaises(ValueError, Led, config)
+        
 if __name__ == '__main__':
     unittest.main()

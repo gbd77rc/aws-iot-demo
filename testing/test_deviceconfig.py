@@ -42,3 +42,7 @@ class DeviceConfig_Tests(unittest.TestCase):
         self.assertEqual(a.Type, DeviceType.DHT11)
         self.assertEqual(a.Pin, 6)
         self.assertEqual(a.Name, "Sensor (DHT-11)")
+
+
+if __name__ == '__main__':
+    unittest.main()        

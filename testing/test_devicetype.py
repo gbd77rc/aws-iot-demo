@@ -29,3 +29,7 @@ class DeviceType_Tests(unittest.TestCase):
         expected = "CPU Temperature"
         a = DeviceType.CPUTEMP
         self.assertEqual(expected, a.get_friendly())          
+
+
+if __name__ == '__main__':
+    unittest.main()        

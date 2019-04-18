@@ -47,3 +47,7 @@ class DeviceResult_Tests(unittest.TestCase):
         js = dr.to_json(True)
         expected = "{\n    \"duration\": 0.5,\n    \"isvalid\": true,\n    \"name\": \"Test-1\",\n    \"readings\": []\n}"
         self.assertEqual(js, expected)   
+
+
+if __name__ == '__main__':
+    unittest.main()        
