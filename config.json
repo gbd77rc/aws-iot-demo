@@ -33,23 +33,19 @@
     "devices": [{
         "type": "led",
         "name": "Green",
-        "pin": 26,
-        "direction": "OUT"
+        "pin": 26
     }, {
         "type": "led",
         "name": "Yellow",
-        "pin": 19,
-        "direction": "OUT"
+        "pin": 19
     }, {
         "type": "led",
         "name": "Red",
-        "pin": 13,
-        "direction": "OUT"
+        "pin": 13
     }, {
         "type": "dht11",
         "name": "DHT-11",
-        "pin": 4,
-        "direction": "IN"
+        "pin": 4
     }, {
         "type": "cputemp",
         "name": "CPU Temperature",

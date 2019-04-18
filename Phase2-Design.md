@@ -52,6 +52,57 @@ Each provider will have a base/interface class that will suppport specific featu
 * Stop - Stop the polling loop
 * Report - List the amount of messages sent/recieved, total size of messages send/recieved so far
 
+## Devices
+This module will load the device configuration for the Use Cases.
+
+Each Device will ahve a base/interface class that will support the following features
+
+* Initialise the device
+* Read the data from device
+* Write data to device
+
+The Read feature will return the following result object
+
+    {
+        "name": "<name of the device>",
+        "duration": <how many ms did it take>,
+        "readings": [
+            {"name" : "name of the reading",
+            "type" : "<The type of data being returned! String, Boolean, Integer, Float>,
+            "value": <The value of the reading!> }
+        ]
+    }
+
+### Examples
+
+DHT-11 will give something like this
+
+    {
+        "name": "dht11",
+        "duration": 2000,
+        "readings": [
+            {"name" : "Temperature",
+            "type" : "float",
+            "value": 24.5 },
+            {"name" : "Humitidy",
+            "type" : "float",
+            "value": 56.0 }
+        ]
+    }
+
+CPU Temperature will give something like this
+
+    {
+        "name": "cputemp",
+        "duration": 50,
+        "readings": [
+            {"name" : "Temperature",
+            "type" : "float",
+            "value": 48.5 }
+        ]
+    }
+
+
 ## Use Cases
 This module will select specific use cases, 
 

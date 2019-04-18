@@ -2,6 +2,9 @@ import time
 import RPi.GPIO as GPIO
 import logging
 import platform
+from demo.devices.devicebase import DeviceBase
+from demo.devices.deviceresult import DeviceResult
+from demo.config.deviceconfig import DeviceConfig
 
 logger = logging.getLogger(__name__)
 
@@ -9,39 +12,16 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.cleanup()
 
-class DHT11Result:
-    'DHT11 sensor result returned by DHT11.read() method'
-
-    ERR_NO_ERROR = 0
-    ERR_MISSING_DATA = 1
-    ERR_CRC = 2
-
-    error_code = ERR_NO_ERROR
-    temperature = -1
-    humidity = -1
-
-    def __init__(self, error_code, temperature, humidity):
-        self.error_code = error_code
-        self.temperature = temperature
-        self.humidity = humidity
-
-    def is_valid(self):
-        return self.error_code == DHT11Result.ERR_NO_ERROR
-
-
-class DHT11:
+class DHT11(DeviceBase):
     'DHT11 sensor reader class for Raspberry'
-
-    __pin = 0
-    __max_counter = 100
-
-    def __init__(self, pin):
+    def __init__(self, config):
         logger.debug("Machine architecture is {}".format(platform.machine()))
-        self.__pin = pin
         self.__max_counter = 10 if platform.machine() == 'x86_64' else 100
+        super().__init__(config)
 
     def read(self):
-        GPIO.setup(self.__pin, GPIO.OUT)
+        start = time.time()
+        GPIO.setup(super().Config.Pin, GPIO.OUT)
 
         # send initial high
         self.__send_and_sleep(GPIO.HIGH, 0.05)
@@ -50,7 +30,7 @@ class DHT11:
         self.__send_and_sleep(GPIO.LOW, 0.02)
 
         # change to input using pull up
-        GPIO.setup(self.__pin, GPIO.IN, GPIO.PUD_UP)
+        GPIO.setup(super().Config.Pin, GPIO.IN, GPIO.PUD_UP)
 
         # collect data into an array
         data = self.__collect_input()
@@ -61,7 +41,8 @@ class DHT11:
         # if bit count mismatch, return error (4 byte data + 1 byte checksum)
         if len(pull_up_lengths) != 40:
             logger.warning("Problem with missing data!")
-            return DHT11Result(DHT11Result.ERR_MISSING_DATA, 0, 0)
+            end = time.time()
+            return DeviceResult(super().Config.Type.get_friendly(), (end - start), False)
 
         # calculate bits from lengths of the pull up periods
         bits = self.__calculate_bits(pull_up_lengths)
@@ -71,16 +52,21 @@ class DHT11:
 
         # calculate checksum and check
         checksum = self.__calculate_checksum(the_bytes)
+        end = time.time()
+        is_valid = True
         if the_bytes[4] != checksum:
             logger.warning("Problem with checksum ({} != {})".format(the_bytes[4], checksum))
-            return DHT11Result(DHT11Result.ERR_CRC, 0, 0)
-
+            is_valid = False
+        
+        result = DeviceResult(super().Config.Type.get_friendly(), (end-start), is_valid)
+        result.add_reading("Temperature", "float", the_bytes[2])
+        result.add_reading("Humidity", "float", the_bytes[0])
         # ok, we have valid data, return it
         logger.debug("Detected values for T ({}) and H ({})".format(the_bytes[2], the_bytes[0]))
-        return DHT11Result(DHT11Result.ERR_NO_ERROR, the_bytes[2], the_bytes[0])
+        return result
 
     def __send_and_sleep(self, output, sleep):
-        GPIO.output(self.__pin, output)
+        GPIO.output(super().Config.Pin, output)
         time.sleep(sleep)
 
     def __collect_input(self):
@@ -92,7 +78,7 @@ class DHT11:
         last = -1
         data = []
         while True:
-            current = GPIO.input(self.__pin)
+            current = GPIO.input(super().Config.Pin)
             data.append(current)
             if last != current:
                 unchanged_count = 0

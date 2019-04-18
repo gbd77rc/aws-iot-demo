@@ -58,7 +58,6 @@ This will enable or disable device that will be read/write.  It will list out th
     "devices":[{
         "type": "<Type of device to use>",
         "name": "<Friendly name of the sensor>",
-        "direction":"<which direction should the pin be in: OUT or IN>"
         "pin": <The pin where to read or write value>
     },{
         "type": "<Type of psudo file path to use>",
@@ -75,8 +74,7 @@ This device is switch on/off the LED.  Here is an example of the LED device
     {
         "type": "led",
         "name": "Green",
-        "pind": 23,
-        "direction": "OUT"
+        "pind": 23
     }
 
 
@@ -86,8 +84,7 @@ This device will read the temperature/humidity using the one-wire protocol.
     {
         "type": "dht11",
         "name": "DHT-11",
-        "pind": 16,
-        "direction": "OUT"
+        "pind": 16
     }
 
 ### CPU Temp
