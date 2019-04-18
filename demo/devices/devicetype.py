@@ -7,7 +7,7 @@ class DeviceType(Enum):
     DHT11 = 1
     LED = 2
     CPUTEMP = 3
-    CPUPRECENT = 4
+    CPUPERCENT = 4
     MEMAVAIL = 5
     SERIALNUM = 6
 
@@ -17,7 +17,7 @@ class DeviceType(Enum):
             "DHT-11 Sensor",
             "LED Light",
             "CPU Temperature",
-            "CPU Precentage Used",
+            "CPU Percentage Used",
             "Memory Available",
             "Serial Number"
         ]
@@ -30,8 +30,8 @@ class DeviceType(Enum):
             return DeviceType.LED
         if name.upper() == "CPUTEMP":
             return DeviceType.CPUTEMP
-        if name.upper() == "CPUPRECENT":
-            return DeviceType.CPUPRECENT
+        if name.upper() == "CPUPERCENT":
+            return DeviceType.CPUPERCENT
         if name.upper() == "MEMAVAIL":
             return DeviceType.MEMAVAIL
         if name.upper() == "SERIALNUM":

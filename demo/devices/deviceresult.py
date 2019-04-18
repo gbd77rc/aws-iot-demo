@@ -3,8 +3,8 @@ import json
 class DeviceResult:
     def __init__(self, name, duration=0.0, valid = True):
         self.__name = name
-        self.__duration = duration
-        self.__isvalid = valid
+        self.Duration = duration
+        self.IsValid = valid
         self.__readings = []
 
     def add_reading(self, name, type, value):
@@ -46,4 +46,4 @@ class DeviceResult:
 
     @Duration.setter
     def Duration(self, value):
-        self.__duration = value
+        self.__duration = round(value,4)
