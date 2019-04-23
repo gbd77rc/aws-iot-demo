@@ -29,8 +29,77 @@ class DeviceLoader_Tests(unittest.TestCase):
 
         self.assertEqual(len(loader.Devices), 1)
         self.assertEqual(loader.Devices[0].Config.Type, DeviceType.DHT11)
+        self.assertEqual(loader.Devices[0].Config.Name, "Sensor")
+        self.assertEqual(loader.Devices[0].Config.Friendly, "Sensor (DHT-11)")
 
+    def test_load_led(self):
+        loader = DeviceLoader()
+        loader.load_devices([{
+            "name": "Green",
+            "type": "led",
+            "pin": 6
+        }])
 
+        self.assertEqual(len(loader.Devices), 1)
+        self.assertEqual(loader.Devices[0].Config.Type, DeviceType.LED)
+        self.assertEqual(loader.Devices[0].Config.Friendly, "Green (LED)")
+
+    def test_load_cpup(self):
+        loader = DeviceLoader()
+        loader.load_devices([{
+            "name": "CPU Info",
+            "type": "cpuperc"
+        }])
+
+        self.assertEqual(len(loader.Devices), 1)
+        self.assertEqual(loader.Devices[0].Config.Type, DeviceType.CPUPERCENT)
+        self.assertEqual(loader.Devices[0].Config.Friendly, "CPU Info (CPU Percentage Used)")
+
+    def test_load_cput(self):
+        loader = DeviceLoader()
+        loader.load_devices([{
+            "name": "CPU Info",
+            "type": "cputemp"
+        }])
+
+        self.assertEqual(len(loader.Devices), 1)
+        self.assertEqual(loader.Devices[0].Config.Type, DeviceType.CPUTEMP)
+        self.assertEqual(loader.Devices[0].Config.Friendly, "CPU Info (CPU Temperature)")
+
+    def test_load_mem(self):
+        loader = DeviceLoader()
+        loader.load_devices([{
+            "name": "Memory Info",
+            "type": "memory"
+        }])
+
+        self.assertEqual(len(loader.Devices), 1)
+        self.assertEqual(loader.Devices[0].Config.Type, DeviceType.MEMORY)
+        self.assertEqual(loader.Devices[0].Config.Friendly, "Memory Info (Memory Information in Bytes)")
+
+    def test_load_multiple(self):
+        loader = DeviceLoader()
+        loader.load_devices([{
+            "name": "Memory Info",
+            "type": "memory"
+        },{
+            "name": "Green",
+            "type": "led",
+            "pin": 26
+        },{
+            "name": "Yellow",
+            "type": "led",
+            "pin": 27
+        },{
+            "name": "Red",
+            "type": "led",
+            "pin": 28
+        }])
+
+        self.assertEqual(len(loader.Devices), 4)
+        self.assertEqual(loader.Devices[0].Config.Type, DeviceType.MEMORY)
+        self.assertEqual(loader.Devices[0].Config.Friendly, "Memory Info (Memory Information in Bytes)")
+        self.assertEqual(loader.Devices[1].Config.Type, DeviceType.LED)
 
 if __name__ == '__main__':
     unittest.main()

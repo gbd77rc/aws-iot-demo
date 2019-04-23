@@ -21,7 +21,7 @@ class DeviceConfig:
             self.__type = DeviceType.get_type(config["type"])
             if self.__type == DeviceType.DEVNONE:
                 raise ValueError()
-            self.__name = "{} ({})".format(self.__name, self.__type.get_friendly())
+            self.__friendly = "{} ({})".format(self.__name, self.__type.get_friendly())
         except KeyError:
             raise ValueError()
 
@@ -36,6 +36,9 @@ class DeviceConfig:
     @property
     def Name(self):
         return self.__name
+    @property
+    def Friendly(self):
+        return self.__friendly
 
     @property
     def Type(self):

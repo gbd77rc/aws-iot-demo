@@ -28,7 +28,7 @@ class DeviceType(Enum):
             return DeviceType.LED
         if name.upper() == "CPUTEMP":
             return DeviceType.CPUTEMP
-        if name.upper() == "CPUPERCENT":
+        if name.upper() == "CPUPERCENT" or name.upper() == "CPUPERC":
             return DeviceType.CPUPERCENT
         if name.upper() == "MEMORY":
             return DeviceType.MEMORY
