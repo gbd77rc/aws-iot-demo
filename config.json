@@ -17,18 +17,18 @@
     "use-cases": [{
         "use-case": "Engineering",
         "push": 10,
-        "payload_type": "JSON",
-        "devices": ["DHT-11", "CPU Temperature", "CPU Precentage", "Memory Available", "Serial Number", "Green", "Yellow", "Red"]
+        "payload-type": "JSON",
+        "devices": ["Sensor", "CPU", "Memory", "Green", "Yellow", "Red"]
     }, {
         "use-case": "Standard",
         "push": 30,
-        "payload_type": "PROTOBUF",
-        "devices": ["DHT-11", "CPU Temperature"]
+        "payload-type": "PROTOBUF",
+        "devices": ["Sensor", "CPU"]
     }, {
         "use-case": "Shadow",
         "push": 30,
-        "payload_type": "JSON",
-        "devices": ["DHT-11", "CPU Temperature", "Green", "Yellow", "Red"]
+        "payload-type": "JSON",
+        "devices": ["Sensor", "CPU", "Green", "Yellow", "Red"]
     }],
     "devices": [{
         "type": "led",

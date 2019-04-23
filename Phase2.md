@@ -47,8 +47,8 @@ This is the configuration of the use cases that can be done
     "use-case": "<the use case to use>",
     "use-cases" :[{
         "use-case": "<name of the use case>",
-        "push": <how many seconds should it push the data>,
-        "payload_type": "<JSON or PROTOBUF type of payload>",
+        "push": <how many seconds to wait before it pushes the data>,
+        "payload-type": "<JSON or PROTOBUF type of payload>",
         "devices":[<list of device names to used for this use-case>]
     }]
 
