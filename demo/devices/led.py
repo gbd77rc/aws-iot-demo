@@ -11,6 +11,7 @@ from demo.config.deviceconfig import DeviceConfig
 from demo.devices.deviceresult import DeviceResult
 from demo.devices.devicebase import DeviceBase
 from demo.devices.devicetype import DeviceType
+from demo.devices.directiontype import DirectionType
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -26,7 +27,7 @@ class Led(DeviceBase):
     __blinking = False
 
     def __init__(self, config):
-        super().__init__(config, DeviceType.LED)
+        super().__init__(config, DeviceType.LED, DirectionType.OUT)
         GPIO.setup(super().Config.Pin, GPIO.OUT)
         logger.debug("Initialised LED ({}) on PIN {}".format(
             super().Config.Name, super().Config.Pin))

@@ -1,7 +1,7 @@
 import unittest
 import logging
 
-logging.basicConfig(level=logging.DEBUG,
+logging.basicConfig(level=logging.ERROR,
                     format="%(asctime)s - %(name)s - %(levelname)s - [%(message)s]")
 import sys
 import platform
@@ -13,6 +13,7 @@ if platform.machine() == 'x86_64':
 
 from demo.config.deviceconfig import DeviceConfig
 from demo.devices.dht11 import DHT11
+from demo.devices.directiontype import DirectionType
 
 class DHT11_Tests(unittest.TestCase):
     dht11 = {}
@@ -29,6 +30,7 @@ class DHT11_Tests(unittest.TestCase):
         value = self.dht11.read()
         self.assertFalse(value.IsValid)
         logging.info("Reading is [{}]".format(value.to_json(pretty=True)))
+        self.assertEqual(self.dht11.Direction, DirectionType.IN)
 
     def test_dif_config_type(self):
         config = DeviceConfig({

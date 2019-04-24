@@ -13,6 +13,7 @@ logging.basicConfig(level=logging.ERROR,
                     format="%(asctime)s - %(name)s - %(levelname)s - [%(message)s]")
 from demo.devices.led import Led
 from demo.config.deviceconfig import DeviceConfig
+from demo.devices.directiontype import DirectionType
 
 class LED_Tests(unittest.TestCase):
     green_led = {}
@@ -56,6 +57,7 @@ class LED_Tests(unittest.TestCase):
         self.assertTrue(self.green_led.is_on())
         self.green_led.write(0)
         self.assertFalse(self.green_led.is_on())
+        self.assertEqual(self.green_led.Direction, DirectionType.OUT)
         
     def test_dif_config_type(self):
         config = DeviceConfig({
