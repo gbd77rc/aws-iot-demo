@@ -8,9 +8,11 @@
         "thing_id": "iot-demo-rpi-1",
         "endpoint": "a1bqyju1450wf9-ats.iot.eu-west-1.amazonaws.com",
         "port": 8883,
-        "root": "./certs/root-ca.pem",
-        "cert": "./certs/8098cdfe96-certificate.pem.crt",
-        "private": "./certs/8098cdfe96-private.pem.key",
+        "security":[
+            {"root": "./certs/root-ca.pem"},
+            {"cert": "./certs/8098cdfe96-certificate.pem.crt"},
+            {"private": "./certs/8098cdfe96-private.pem.key"}
+        ],
         "mode": "STAND"
     }],
     "use-case": "Standard",

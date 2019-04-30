@@ -34,7 +34,7 @@ class UseCase(Publisher):
         while not self.__event.is_set():
             body = self.get_reading()
             msg = json.dumps(body)
-            logger.debug("Publishing Message at {}: [{}]".format(time.time(), msg))
+            logger.debug("Publishing Message at {}: [{}]".format(datetime.utcnow().strftime('%Y%m%d %H:%M:%S.%f'), msg))
             self.dispatch("use-case", body)
             self.__event.wait(self.Config.Wait)     
 
@@ -50,8 +50,9 @@ class UseCase(Publisher):
                     isValid = False
                 body["results"].append(result.to_json())
 
-        body["epoch"] = datetime.utcnow().strftime('%Y%m%d %H:%M:%S.%f')
+        body["epoch"] = time.time()
         body["valid"] = isValid
+        body["use-case"] = self.Config.Name
         return body               
 
     def load_devices(self, devices):

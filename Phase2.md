@@ -22,7 +22,7 @@ The following configuration options will be available.
 ## Cloud Provider
 The configuration will have a section per provider and option to say which provider to use.  The root configuration will also include the following options for cloud providers
 
-    "cloud": "<provider key>"
+    "cloud": "<provider type>"
     "telemetry_topic": "<Topic name to use to to send telemetry>",
     "control_topic": "<Topic name to use for control signals>"
     "payload_type": "<The type of payload to use, PROTOBUF or JSON">
@@ -35,9 +35,11 @@ This is the configuration to be used in the AWS provider section
         "thing_id": "<thing id on AWS>",
         "endpoint": "<url endpoint to AWS account>",
         "port": "<MQTT port to use 8883 or 443>",
-        "root": "<AWS Root Public Certificate>",
-        "cert": "<AWS Thing Public Certificate>",
-        "private": "<AWS Thing Private Key>",
+        "security":[
+            {"root": "<AWS Root Public Certificate>"},
+            {"cert": "<AWS Thing Public Certificate>"},
+            {"private": "<AWS Thing Private Key>"}
+        ],
         "mode": "<Mode of communication, STAND or SHADW>
     }]
 
